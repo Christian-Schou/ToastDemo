@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,13 @@ builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
 {
     ProgressBar = true,
     Timeout = 5000
+});
+
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
 });
 
 var app = builder.Build();
@@ -27,6 +36,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.UseNToastNotify();
+
+app.UseNotyf();
 
 app.MapRazorPages();
 
